@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<node name="/lge/audioneinfo/DBus/testSW/TestAgent">
+  <interface name="lge.testSW.DBus.TestAgent">
+    <method name="HelloString">
+      <arg type="s" name="name" direction="in"/>
+      <arg type="s" name="greeting" direction="out"/>
+    </method>
+    <method name="reqTestFromClient">
+      <arg type="a" name="name" direction="in"/>
+      <arg type="a" name="greeting" direction="out"/>
+    </method>
+ 
+    <signal name="EchoCount">
+      <arg type="y" name="count"/>
+    </signal>
+  </interface>
+</node>
