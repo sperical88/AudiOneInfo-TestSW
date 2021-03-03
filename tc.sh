@@ -34,20 +34,9 @@ function  build_server {
 #build TC_Client
 function  build_client {
     echo "build_client";
-    #g++ -fPIC -o ./TC_Client/TC_Client ./TC_Client/TC_Client.o -L/usr/lib/x86_64-linux-gnu/  -lQt5DBus -lQt5Core
-    #g++ -c -fPIC -I/usr/include/x86_64-linux-gnu/qt5/ -I./include/ -o ./TC_Client/TC_Client.o ./TC_Client/TC_Client.cpp
-    ./utils/moc -I./qt5-include/qt5 -I./qt5-include/qt5/QtDBus -I./qt5-include/qt5/QtCore ./TC_Client/TC_Client.h -o ./TC_Client/moc_TC_Client.cpp
-    ./utils/moc -I./qt5-include/qt5 -I./qt5-include/qt5/QtDBus -I./qt5-include/qt5/QtCore ./TC_Thread/TC_Thread.h -o ./TC_Thread/moc_TC_Thread.cpp
-	./utils/moc -I./qt5-include/qt5 -I./qt5-include/qt5/QtDBus -I./qt5-include/qt5/QtCore ./TC_Client/TC_ClientAdaptor.h -o ./TC_Client/moc_TC_ClientAdaptor.cpp
-    g++ -c -fPIC -I./qt5-include/qt5/ -I./include/ -o ./TC_Client/TC_Client.o ./TC_Client/TC_Client.cpp
-	g++ -c -fPIC -I./qt5-include/qt5/ -I./include/ -o ./TC_Client/TC_ClientAdaptor.o ./TC_Client/TC_ClientAdaptor.cpp
-    g++ -c -fPIC -I./qt5-include/qt5/ -I./include/ -o ./TC_Thread/TC_Thread.o ./TC_Thread/TC_Thread.cpp
-    g++ -c -fPIC -I./qt5-include/qt5/ -I./include/ -o ./TC_Client/moc_TC_Client.o ./TC_Client/moc_TC_Client.cpp
-	g++ -c -fPIC -I./qt5-include/qt5/ -I./include/ -o ./TC_Client/moc_TC_ClientAdaptor.o ./TC_Client/moc_TC_ClientAdaptor.cpp
-    g++ -c -fPIC -I./qt5-include/qt5/ -I./include/ -o ./TC_Thread/moc_TC_Thread.o ./TC_Thread/moc_TC_Thread.cpp
-    g++ -fPIC -o ./TC_Client/TC_Client ./TC_Client/TC_Client.o ./TC_Client/moc_TC_Client.o ./TC_Thread/TC_Thread.o \
-            ./TC_Thread/moc_TC_Thread.o -L./qt5-libs/  \
-			./TC_Client/TC_ClientAdaptor.o ./TC_Client/moc_TC_ClientAdaptor.o -lQt5DBus -lQt5Core
+    g++ -c -fPIC -std=c++11 -pthread -I/usr/include/dbus-c++-1/ -o TestAgent.o TestAgent.cpp
+    g++ -c -fPIC -std=c++11 -pthread -I/usr/include/dbus-c++-1/ -o TestAgentMain.o TestAgentMain.cpp
+    g++ -fPIC -o TestAgent TestAgent.o TestAgentMain.o -L/usr/lib/x86_64-linux-gnu -ldbus-c++-1 -lpthread
     echo "done.";
 }
 

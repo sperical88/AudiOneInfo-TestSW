@@ -9,8 +9,8 @@
 #include <dbus-c++/dbus.h>
 #include <cassert>
 
-namespace lge {
-namespace testSW {
+namespace org {
+namespace freedesktop {
 namespace DBus {
 
 class TestAgent_adaptor
@@ -19,7 +19,7 @@ class TestAgent_adaptor
 public:
 
     TestAgent_adaptor()
-    : ::DBus::InterfaceAdaptor("lge.testSW.DBus.TestAgent")
+    : ::DBus::InterfaceAdaptor("org.freedesktop.DBus.TestAgent")
     {
         register_method(TestAgent_adaptor, HelloString, _HelloString_stub);
         register_method(TestAgent_adaptor, reqTestFromClient, _reqTestFromClient_stub);
@@ -35,8 +35,8 @@ public:
         };
         static ::DBus::IntrospectedArgument reqTestFromClient_args[] = 
         {
-            { "name", "a", true },
-            { "greeting", "a", false },
+            { "requestMsg", "v", true },
+            { "responseMsg", "v", false },
             { 0, 0, 0 }
         };
         static ::DBus::IntrospectedArgument EchoCount_args[] = 
@@ -61,7 +61,7 @@ public:
         };
         static ::DBus::IntrospectedInterface TestAgent_adaptor_interface = 
         {
-            "lge.testSW.DBus.TestAgent",
+            "org.freedesktop.DBus.TestAgent",
             TestAgent_adaptor_methods,
             TestAgent_adaptor_signals,
             TestAgent_adaptor_properties
@@ -81,7 +81,7 @@ public:
      * you will have to implement them in your ObjectAdaptor
      */
     virtual std::string HelloString(const std::string& name) = 0;
-    virtual std::vector<  > reqTestFromClient(const std::vector<  >& name) = 0;
+    virtual ::DBus::Variant reqTestFromClient(const ::DBus::Variant& requestMsg) = 0;
 
 public:
 
@@ -114,8 +114,8 @@ private:
     {
         ::DBus::MessageIter ri = call.reader();
 
-        std::vector<  > argin1; ri >> argin1;
-        std::vector<  > argout1 = reqTestFromClient(argin1);
+        ::DBus::Variant argin1; ri >> argin1;
+        ::DBus::Variant argout1 = reqTestFromClient(argin1);
         ::DBus::ReturnMessage reply(call);
         ::DBus::MessageIter wi = reply.writer();
         wi << argout1;

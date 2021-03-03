@@ -11,7 +11,8 @@ int main()
     DBus::default_dispatcher = &dispatcher;
     DBus::_init_threading();
     DBus::Connection conn = DBus::Connection::SessionBus();
-    conn.request_name("lge.testSW.DBus.TestAgentService");	// input new service node name to conn object Do not confuse it with "lge.testSW.DBus.TestAgent" node for interface
+    //conn.request_name("lge.testSW.DBus.TestAgentService");	// input new service node name to conn object
+    conn.request_name("org.freedesktop.DBus.tcClient");
  
     // create TestAgentServer object with session connection
     TestAgentServer server(&conn);
@@ -22,12 +23,14 @@ int main()
         dispatcher.enter();
     });
  
+    printf("TestAgent Service is ready!!\n");
+
     // emit EchoSignal every seconds.
     while ( true )
     {
-        printf("emit signal 'EchoSignal' count : %d\n", count);
-        server.EchoCount(count++);	// it's signal function created through xml
-        sleep(1);
+        //printf("emit signal 'EchoSignal' count : %d\n", count);
+        //server.EchoCount(count++);	// it's signal function created through xml
+        //sleep(5);
     }
     return 0;
 }
